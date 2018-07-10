@@ -63,11 +63,11 @@ variable "availability_zones" {
 }
 
 ############################
-# VPN Variables
+# Security Groups Variables
 ############################
 variable "public_ip" {
   type        = "list"
-  description = "The IP of your Office"
+  description = "The IPs of your Office."
 }
 
 ############################

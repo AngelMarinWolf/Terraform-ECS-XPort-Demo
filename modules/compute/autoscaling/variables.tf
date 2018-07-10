@@ -19,7 +19,7 @@ variable "server_ami" {
   description      = "It is a map with a list of AMIs used for each region, minimum is Required one for you region."
 
   default = {
-    us-east-1      = "ami-cad827b7"
+    us-east-1      = "ami-5253c32d"
     us-east-2      = "ami-ef64528a"
     us-west-1      = "ami-29b8b249"
     us-west-2      = "ami-baa236c2"
