@@ -1,0 +1,18 @@
+{
+    "containerDefinitions": [
+        {
+            "portMappings": [
+                {
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "containerPort": 80
+                }
+            ],
+            "memory": 100,
+            "image": "nginx:latest",
+            "name": "${project_name}-application"
+        }
+    ],
+    "family": "angelmarin-website-${environment}",
+    "networkMode": "bridge"
+}
