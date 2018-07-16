@@ -9,7 +9,7 @@ resource "aws_ecr_repository" "repository" {
 # ECS Task Definition
 ############################
 data "template_file" "template" {
-  template = "${file("./template/nginx-container.json")}"
+  template = "${file("${path.module}/templates/nginx-container.json")}"
 
   vars {
     project_name  = "${var.project_name}"
@@ -18,8 +18,10 @@ data "template_file" "template" {
 }
 
 resource "aws_ecs_task_definition" "task" {
-  family                = "${var.family_name}"
-  container_definitions = "${data.template_file.template.rendered}"
+  family                    = "${var.project_name}-application-${var.environment}"
+  container_definitions     = "${data.template_file.template.rendered}"
+  network_mode              = "bridge"
+  requires_compatibilities  = ["EC2"]
 }
 
 ############################
@@ -49,7 +51,42 @@ resource "aws_ecs_service" "service" {
 
   load_balancer {
     target_group_arn = "${var.alb_target_group}"
-    container_name   = "${var.project_name}-application"
+    container_name   = "${var.project_name}-application-${var.environment}"
     container_port   = 80
   }
+
+  lifecycle {
+    ignore_changes = ["desired_count"]
+  }
+}
+
+############################
+# ECS Scaling policies
+############################
+resource "aws_appautoscaling_target" "ecs_target" {
+  max_capacity       = 5
+  min_capacity       = 2
+  resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.service.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+}
+
+resource "aws_appautoscaling_policy" "ecs_policy_memory" {
+  name                    = "ScalingMemory"
+  policy_type             = "TargetTrackingScaling"
+  resource_id             = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.service.name}"
+  scalable_dimension      = "ecs:service:DesiredCount"
+  service_namespace       = "ecs"
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+    }
+
+    target_value = 80
+    scale_in_cooldown = 60
+    scale_out_cooldown = 60
+  }
+
+  depends_on = ["aws_appautoscaling_target.ecs_target"]
 }
