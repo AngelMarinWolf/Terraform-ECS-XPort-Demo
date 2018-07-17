@@ -30,6 +30,7 @@ module "security_groups" {
   vpc_id              = "${module.vpc.vpc_id}"
   environment         = "${var.environment}"
   project_name        = "${var.project_name}"
+  public_ip           = "${var.public_ip}"
 }
 
 ############################
@@ -43,7 +44,7 @@ module "alb" {
   security_groups          = ["${module.security_groups.sg_alb_id}"]
 
   ssl_certificate_arn       = "${var.ssl_certificate_arn}"
-  target_group_frontend_arn = "${module.tg_develop_1.alb_tg_fe_arn}"
+  target_group_frontend_arn = "${module.target_group.alb_tg_arn}"
 
   environment              = "${var.environment}"
   project_name             = "${var.project_name}"
@@ -53,7 +54,7 @@ module "alb" {
 ############################
 # Init Target Groups Modules
 ############################
-module "tg_develop_1" {
+module "target_group" {
   source                   = "../../modules/compute/tg"
 
   vpc_id                   = "${module.vpc.vpc_id}"
@@ -71,6 +72,9 @@ module "ecs" {
   environment              = "${var.environment}"
   project_name             = "${var.project_name}"
 
+  number_of_tasks          = "${var.number_of_tasks}"
+  alb_target_group         = "${module.target_group.alb_tg_arn}"
+  image_tag                = "${var.image_tag}"
 }
 
 ############################

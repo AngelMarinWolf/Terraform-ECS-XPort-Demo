@@ -1,8 +1,8 @@
 ############################
 # Target Groups
 ############################
-resource "aws_lb_target_group" "target_group_frontend" {
-  name                  = "tg-fe-${var.project_name}-${var.environment}"
+resource "aws_lb_target_group" "target_group" {
+  name                  = "tg-${var.project_name}-${var.environment}"
   port                  = 80
   protocol              = "HTTP"
   vpc_id                = "${var.vpc_id}"
@@ -12,7 +12,7 @@ resource "aws_lb_target_group" "target_group_frontend" {
     interval            = 10
     path                = "/"
     protocol            = "HTTP"
-    matcher             = "301"
+    matcher             = "200"
     timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 3

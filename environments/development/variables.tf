@@ -63,11 +63,11 @@ variable "availability_zones" {
 }
 
 ############################
-# VPN Variables
+# Security Groups Variables
 ############################
 variable "public_ip" {
   type        = "list"
-  description = "The IP of your Office"
+  description = "The IPs of your Office."
 }
 
 ############################
@@ -104,21 +104,16 @@ variable "ssl_certificate_arn" {
   default     = ""
 }
 
-variable "load_balancer_rules_back_dev_1" {
-  type = "map"
-  description = "You have to specify which rules will be added in the LoadBalancer"
+############################
+# ECS Variables
+############################
 
-  default = {
-    rule1      = ["www.example.com", "/wp*"]
-    rule2      = ["www.example.com", "*.php"]
-  }
+variable "number_of_tasks" {
+  type        = "string"
+  description = "The number of instances of the task definition to place and keep running."
 }
 
-variable "load_balancer_rules_front_dev_1" {
-  type = "map"
-  description = "You have to specify which rules will be added in the LoadBalancer"
-
-  default = {
-    rule1      = ["www.example.com"]
-  }
+variable "image_tag" {
+  type        = "string"
+  description = "Tag of the desired Docker Image to deploy."
 }

@@ -12,3 +12,8 @@ variable "environment" {
   type        = "string"
   description = "A logical name that will be used as prefix and tag for the created resources."
 }
+
+variable "public_ip" {
+  type        = "list"
+  description = "The IPs of your Office."
+}

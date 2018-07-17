@@ -1,0 +1,13 @@
+[{
+  "name": "${project_name}-application-${environment}",
+  "image": "${repository}:${image_tag}",
+  "portMappings": [
+      {
+          "hostPort": 0,
+          "protocol": "tcp",
+          "containerPort": 80
+      }
+  ],
+  "cpu": 0,
+  "memory": 100
+}]
