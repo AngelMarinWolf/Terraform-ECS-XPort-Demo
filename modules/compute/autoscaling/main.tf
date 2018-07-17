@@ -48,7 +48,7 @@ resource "aws_key_pair" "public_key" {
 # Launch Configuration
 ############################
 resource "aws_launch_configuration" "lc_ecs_cluster" {
-  name                    = "lc-ecs-cluster-${var.project_name}-${var.environment}"
+  name                    = "lc-ecs-${var.project_name}-${var.environment}"
 
   key_name                = "${aws_key_pair.public_key.key_name}"
   image_id                = "${var.server_ami[var.aws_region]}"
