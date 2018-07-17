@@ -12,6 +12,8 @@ data "template_file" "template" {
   template = "${file("${path.module}/templates/nginx-container.json")}"
 
   vars {
+    repository    = "${aws_ecr_repository.repository.repository_url}"
+    image_tag     = "${var.image_tag}"
     project_name  = "${var.project_name}"
     environment   = "${var.environment}"
   }

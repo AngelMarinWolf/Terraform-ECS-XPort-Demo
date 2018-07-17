@@ -17,3 +17,8 @@ variable "alb_target_group" {
   type        = "string"
   description = "The ARN of the Load Balancer target group to associate with the service."
 }
+
+variable "image_tag" {
+  type        = "string"
+  description = "Tag of the desired Docker Image to deploy."
+}

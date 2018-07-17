@@ -112,3 +112,8 @@ variable "number_of_tasks" {
   type        = "string"
   description = "The number of instances of the task definition to place and keep running."
 }
+
+variable "image_tag" {
+  type        = "string"
+  description = "Tag of the desired Docker Image to deploy."
+}
