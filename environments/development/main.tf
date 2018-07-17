@@ -74,6 +74,7 @@ module "ecs" {
 
   number_of_tasks          = "${var.number_of_tasks}"
   alb_target_group         = "${module.target_group.alb_tg_arn}"
+  image_tag                = "${var.image_tag}"
 }
 
 ############################

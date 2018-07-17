@@ -1,6 +1,6 @@
 [{
   "name": "${project_name}-application-${environment}",
-  "image": "${repository}:$image_tag",
+  "image": "${repository}:${image_tag}",
   "portMappings": [
       {
           "hostPort": 0,

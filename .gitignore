@@ -2,6 +2,6 @@ environments/*/terraform.tfvars
 environments/*/backend.tf
 environments/*/.terraform/
 environments/*/terraform.tfstate*
-environments/*/templates/keys/**
+environments/*/templates/keys/ecs-develop
 
 **/.DS_Store
