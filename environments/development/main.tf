@@ -73,7 +73,11 @@ module "ecs" {
   project_name             = "${var.project_name}"
 
   number_of_tasks          = "${var.number_of_tasks}"
+  max_number_of_tasks      = "${var.max_number_of_tasks}"
+  min_number_of_tasks      = "${var.min_number_of_tasks}"
   alb_target_group         = "${module.target_group.alb_tg_arn}"
+
+  image_name               = "${var.image_name}"
   image_tag                = "${var.image_tag}"
 }
 

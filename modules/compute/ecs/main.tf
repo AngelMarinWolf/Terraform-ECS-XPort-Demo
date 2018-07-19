@@ -9,10 +9,10 @@ resource "aws_ecr_repository" "repository" {
 # ECS Task Definition
 ############################
 data "template_file" "template" {
-  template = "${file("${path.module}/templates/nginx-container.json")}"
+  template = "${file("${path.module}/templates/container.json")}"
 
   vars {
-    repository    = "${aws_ecr_repository.repository.repository_url}"
+    repository    = "${var.image_name != "none" ? var.image_name : aws_ecr_repository.repository.repository_url}"
     image_tag     = "${var.image_tag}"
     project_name  = "${var.project_name}"
     environment   = "${var.environment}"
@@ -66,8 +66,8 @@ resource "aws_ecs_service" "service" {
 # ECS Scaling policies
 ############################
 resource "aws_appautoscaling_target" "ecs_target" {
-  max_capacity       = 5
-  min_capacity       = 2
+  max_capacity       = "${var.max_number_of_tasks}"
+  min_capacity       = "${var.min_number_of_tasks}"
   resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"

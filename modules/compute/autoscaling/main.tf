@@ -47,7 +47,7 @@ resource "aws_key_pair" "public_key" {
 ############################
 # Launch Configuration
 ############################
-resource "aws_launch_configuration" "lc_ecs_cluster" {
+resource "aws_launch_configuration" "lc_ecs" {
   name                    = "lc-ecs-${var.project_name}-${var.environment}"
 
   key_name                = "${aws_key_pair.public_key.key_name}"
@@ -79,7 +79,7 @@ resource "aws_placement_group" "pg_ecs" {
 # AutoScailing Group
 ############################
 resource "aws_autoscaling_group" "autoscaling" {
-  depends_on                = ["aws_launch_configuration.lc_ecs_cluster"]
+  depends_on                = ["aws_launch_configuration.lc_ecs"]
   availability_zones        = ["${var.availability_zones}"]
   name                      = "autoscaling-${var.project_name}-${var.environment}"
 
@@ -91,7 +91,7 @@ resource "aws_autoscaling_group" "autoscaling" {
   health_check_type         = "ELB"
   force_delete              = true
   placement_group           = "${aws_placement_group.pg_ecs.id}"
-  launch_configuration      = "${aws_launch_configuration.lc_ecs_cluster.name}"
+  launch_configuration      = "${aws_launch_configuration.lc_ecs.name}"
 
   vpc_zone_identifier       = ["${var.subnet_ids}"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
