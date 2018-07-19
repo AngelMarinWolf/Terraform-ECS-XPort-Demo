@@ -25,10 +25,10 @@ output "autoscaling_lbs" {
 
 output "launch_configuration_id" {
   description = "Returns the ID of the Launch Configuration created."
-  value       = "${aws_launch_configuration.lc_ecs_cluster.id}"
+  value       = "${aws_launch_configuration.lc_ecs.id}"
 }
 
 output "launch_configuration_name" {
   description = "Returns the ID of the Launch Configuration created."
-  value       = "${aws_launch_configuration.lc_ecs_cluster.name}"
+  value       = "${aws_launch_configuration.lc_ecs.name}"
 }
