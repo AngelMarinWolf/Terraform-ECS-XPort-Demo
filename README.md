@@ -1,10 +1,10 @@
 # Terraform AWS - ECS with Auto Scaling Group
-![](https://img.shields.io/badge/Terraform-0.10.3-brightgreen.svg) ![](https://img.shields.io/badge/Version-1.0.0-blue.svg)
+![](https://img.shields.io/badge/Terraform-0.10.3-brightgreen.svg) ![](https://img.shields.io/badge/Version-1.1.0-blue.svg)
 
 This Terraform project was developed for the creation of an ECS cluster with High Availability, it includes an S3 section with CloudFront.
 
 #### Diagram
-![Terraform Environment](img/aws-diagram.png)
+![Terraform Environment](img/Xport-Demo-AWS.png)
 
 ## Environments
 Inside of this directory, you could find the Profiles in which you can specify how they must be configured, is highly recommend have the `templates` folder in which you could save Keys, Scripts or other files that you could need. Also, you have to create the file `terraform.tfvars` that will contain all the values to be used in the environment, these values are really highly sensitives for this reason never had been inside of repositories, always must to be added in the `.gitignore` file.
